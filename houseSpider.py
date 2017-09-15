@@ -35,7 +35,7 @@ class HouseSpider(object):
                 print ('craw failed', argument)
 
             count = count + 1
-            if count > 100:
+            if count > 10:
                 break
 
         self.outputer.outputHtml()
