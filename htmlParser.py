@@ -32,4 +32,10 @@ class HtmlParser(object):
         if titleNode is not None:
             titleNode = titleNode.find("h1")
             resData['title'] = titleNode.get_text()
+
+        contentNode = soup.find('div',
+                                class_="lemma-summary")
+        if contentNode is not None:
+            resData['content'] = contentNode.get_text()
+
         return resData

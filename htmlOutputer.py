@@ -17,7 +17,8 @@ class HtmlOutputer(object):
         for data in self.datas:
             if 'title' in data:
                 fout.write("<tr>")
-                fout.write("<td>%s</td>" % data['title'])
+                fout.write("<td style='width: 25%;border: solid 1px;' >%s</td><td>%s</td>"
+                           % (data['title'], data['content']))
                 fout.write("</tr>")
 
         fout.write("</table>")
