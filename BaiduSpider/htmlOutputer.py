@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class HtmlOutputer(object):
 
     def __init__(self):
@@ -9,7 +12,7 @@ class HtmlOutputer(object):
         self.datas.append(data)
 
     def outputHtml(self):
-        fout = open('output.html', 'w')
+        fout = open('./data/output' + str(datetime.now()) + '.html', 'w+')
         fout.write("<html>")
         fout.write("<body>")
         fout.write("<table>")
