@@ -1,0 +1,10 @@
+{
+  "taskdb": "mongodb+taskdb://localhost:27017/spider_taskdb",
+  "projectdb": "mongodb+projectdb://localhost:27017/spider_taskdb",
+  "resultdb": "mongodb+resultdb://localhost:27017/spider_resultdb",
+  "webui": {
+    "username": "jambus",
+    "password": "test1234",
+    "need-auth": true
+  }
+}
