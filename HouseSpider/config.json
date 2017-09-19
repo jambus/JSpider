@@ -1,6 +1,6 @@
 {
   "taskdb": "mongodb+taskdb://localhost:27017/spider_taskdb",
-  "projectdb": "mongodb+projectdb://localhost:27017/spider_taskdb",
+  "projectdb": "mongodb+projectdb://localhost:27017/spider_projectdb",
   "resultdb": "mongodb+resultdb://localhost:27017/spider_resultdb",
   "webui": {
     "username": "jambus",
