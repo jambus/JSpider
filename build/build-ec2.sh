@@ -10,15 +10,22 @@ echo "JSpider build script start to run to build the aws ec2 instance..."
 
 if [ $# -lt 1 ]; then
 	echo "Use aws profile: ${green}Default${reset}"
-	instanceResourceId=`aws ec2 run-instances --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids sg-c02bdab9 \
-	--query 'Instances[0].InstanceId' \
-	--user-data file://install-software | sed 's/"//g'` 
 else
 	echo "Use aws profile: ${green}$1${reset}"
-	instanceResourceId=`aws ec2 run-instances --profile $1 --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids sg-c02bdab9 \
-	--query 'Instances[0].InstanceId' \
-	--user-data file://install-software | sed 's/"//g'`
+	export AWS_PROFILE=$1
 fi
+
+
+instanceSecurityGroup=`aws ec2 create-security-group --group-name ec2-spider-securitygroup --description "ec2-spider security group" --query 'GroupId' | sed 's/"//g'`
+echo "Security group created: ${green}$instanceSecurityGroup${reset}"
+
+instanceResourceId=`aws ec2 run-instances --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids $instanceSecurityGroup \
+	--query 'Instances[0].InstanceId' \
+	--user-data file://install-software | sed 's/"//g'` 
+
+#instanceResourceId=`aws ec2 run-instances --profile $1 --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids sg-c02bdab9 \
+#--query 'Instances[0].InstanceId' \
+#--user-data file://install-software | sed 's/"//g'`
 
 echo "Instance Resource ID created: ${green}$instanceResourceId${reset}"
 aws ec2 create-tags --resources $instanceResourceId --tags Key=Name,Value=jambus_spider
