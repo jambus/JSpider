@@ -18,13 +18,13 @@ Run below script to create the ec2 instance and it will print command to connect
 
 	sudo apt update
 	
-	sudo apt install python3-pip
+	sudo apt install -y python3-pip
 	
 	pip3 install --upgrade pip
 	
 	sudo pip3 install pyspider
 	
-	sudo apt install unzip
+	sudo apt install -y unzip
 
 
 3) Download source package
