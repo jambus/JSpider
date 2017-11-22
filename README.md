@@ -2,7 +2,7 @@
 
 ### Install Steps
 
-1) Create aws EC2 instance
+1) Prepare aws credential
 
 	aws configure --profile jambus2018
 	
@@ -10,22 +10,14 @@
 	
 	export AWS_PROFILE=jambus2018
 
+2) Create aws EC2 instance with source package installed
+
 Run below script to create the ec2 instance and it will print command to connect this instance via SSH:
 	
 	./build/build.sh jambus2018
 
-2) Prepare python & pyspider
-
-	sudo apt update
-	
-	sudo apt install -y python3-pip
-	
-	pip3 install --upgrade pip
-	
-	sudo pip3 install pyspider
-	
-	sudo apt install -y unzip
-
+It will create one ec2 intance and start script to install according required softwares.
+Then it will download source package from Github
 
 3) Download source package
 
