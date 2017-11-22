@@ -1,0 +1,10 @@
+{
+  "taskdb": "sqlalchemy+postgresql+taskdb://spider:test1234@jambusdb.cdcfoj97yhqv.ap-northeast-1.rds.amazonaws.com:5432/spider_taskdb",
+  "projectdb": "sqlalchemy+postgresql+projectdb://spider:test1234@jambusdb.cdcfoj97yhqv.ap-northeast-1.rds.amazonaws.com:5432/spider_projectdb",
+  "resultdb": "sqlalchemy+postgresql+resultdb://spider:test1234@jambusdb.cdcfoj97yhqv.ap-northeast-1.rds.amazonaws.com:5432/spider_resultdb",
+  "webui": {
+    "username": "jambus",
+    "password": "test1234",
+    "need-auth": true
+  }
+}

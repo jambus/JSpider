@@ -5,4 +5,4 @@
 # sudo pip uninstall requests
 # sudo pip install requests
 
-pyspider -c config.json
+pyspider -c config-ec2.json

@@ -9,16 +9,12 @@
 	=>input IAM key pair & region
 	
 	export AWS_PROFILE=jambus2018
+
+Run below script to create the ec2 instance and it will print command to connect this instance via SSH:
 	
-	aws ec2 run-instances --profile jambus2018 --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids sg-c02bdab9 --query 'Instances[0].InstanceId' | xargs -I {} aws ec2 create-tags --resources {} --tags Key=Name,Value=jambus_spider
+	./build/build.sh jambus2018
 
-
-2) Print command SSH to ec2
-
-	aws ec2 describe-instances --filters "Name=tag:Name,Values=jambus_spider" --query 'Reservations[0].Instances[0].PublicDnsName' | sed 's/"//g' | xargs -I {} echo "ssh -i jambus2018-ec2.pem ubuntu@{}"
-
-
-3) Prepare python & pyspider
+2) Prepare python & pyspider
 
 	sudo apt update
 	
@@ -31,7 +27,7 @@
 	sudo apt install unzip
 
 
-4) Download source package
+3) Download source package
 
 	mkdir projects
 	
@@ -46,6 +42,9 @@
 	rm jspider.zip
 	
 	sudo pip3 install pymongo
+
+
+4) Prepare RDB
 
 
 5) Run script
