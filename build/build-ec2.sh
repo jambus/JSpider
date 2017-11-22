@@ -15,8 +15,16 @@ else
 	export AWS_PROFILE=$1
 fi
 
+instanceSecurityGroup=`aws ec2 describe-security-groups --group-names ec2-spider-securitygroup --query 'SecurityGroups[0].GroupId'`
+if [ $? -ne 0 ]; then
+	instanceSecurityGroup=`aws ec2 create-security-group --group-name ec2-spider-securitygroup --description "ec2-spider security group" --query 'GroupId' | sed 's/"//g'`
 
-instanceSecurityGroup=`aws ec2 create-security-group --group-name ec2-spider-securitygroup --description "ec2-spider security group" --query 'GroupId' | sed 's/"//g'`
+	aws ec2 authorize-security-group-ingress --group-name ec2-spider-securitygroup --protocol tcp --port 22 --cidr 0.0.0.0/0
+	aws ec2 authorize-security-group-ingress --group-name ec2-spider-securitygroup --protocol tcp --port 8080 --cidr 0.0.0.0/0
+	aws ec2 authorize-security-group-ingress --group-name ec2-spider-securitygroup --protocol tcp --port 80 --cidr 0.0.0.0/0
+else
+	instanceSecurityGroup=echo $instanceSecurityGroup | sed 's/"//g' 
+fi
 echo "Security group created: ${green}$instanceSecurityGroup${reset}"
 
 instanceResourceId=`aws ec2 run-instances --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids $instanceSecurityGroup \

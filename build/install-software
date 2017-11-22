@@ -7,10 +7,17 @@ pip3 install pyspider
 apt install -y unzip
 
 # Download code and prepare
-mkdir /home/ubuntu/projects
-cd /home/ubuntu/projects
+pip3 install pymongo
+
+su ubuntu
+mkdir ~/projects
+cd ~/projects
 wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/master.zip
 unzip jspider.zip
 mv JSpider-master/ JSpider
 rm jspider.zip
-pip3 install pymongo
+
+# execute and startup pyspider
+cd JSpider/HouseSpider
+chmod 744 spider.sh
+sh spider.sh&
