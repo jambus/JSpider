@@ -45,8 +45,10 @@ instancePublicDNS=`aws ec2 describe-instances --instance-ids $instanceResourceId
 #aws ec2 describe-instances --filters "Name=tag:Name,Values=jambus_spider" --query 'Reservations[0].Instances[0].PublicDnsName' | sed 's/"//g' | xargs -I {} echo "ssh -i ~/jambus2018-ec2.pem ubuntu@{}"
 #aws ec2 describe-instances --instance-ids $instanceResourceId --query 'Reservations[0].Instances[0].PublicDnsName' | sed 's/"//g' | xargs -I {} echo "${green}ssh -i ~/jambus2018-ec2.pem ubuntu@{}${reset}"
 echo "EC2 instance start to create. PublicDnsName is: ${green}$instancePublicDNS${reset}"
-echo "Use below command to connect with SSH:"
+echo -e "\nUse below command to connect with SSH:"
 echo "${green}ssh -i ~/jambus2018-ec2.pem ubuntu@$instancePublicDNS${reset}"
+echo -e "\nUse below URL open in browser when EC2 instance ready in minutes:"
+echo "${green}http://$instancePublicDNS:5000${reset}"
 
 #echo "Clean up temp files"
 #rm install-software64
