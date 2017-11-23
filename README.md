@@ -11,9 +11,9 @@
 	export AWS_PROFILE=jambus2018
 
 
-2) Prepare RDB instance
+2) Prepare RDB instance and run sql script to initial DB schema
 
-
+	./build/build-rdb.sh
 
 3) Create aws EC2 instance with source package installed
 
