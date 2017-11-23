@@ -8,12 +8,17 @@ echo "JSpider build script start to run to build the aws ec2 instance..."
 #echo "Encoding the install-software script with base64"
 #base64 install-software > install-software64
 
+buildConfigFile="./config-aws.cfg"
 if [ $# -lt 1 ]; then
-	echo "Use aws profile: ${green}Default${reset}"
+	echo "Use default build configure: ${green}$buildConfigFile${reset}"
 else
-	echo "Use aws profile: ${green}$1${reset}"
-	export AWS_PROFILE=$1
+	buildConfigFile=$1
+	echo "Use custom build configure: ${green}$buildConfigFile${reset}"
 fi
+source $buildConfigFile
+
+echo "Use aws profile: ${green}$aws_profile${reset}"
+export AWS_PROFILE=$aws_profile
 
 instanceSecurityGroup=`aws ec2 describe-security-groups --group-names ec2-spider-securitygroup --query 'SecurityGroups[0].GroupId'`
 if [ $? -ne 0 ]; then
