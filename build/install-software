@@ -8,16 +8,20 @@ apt install -y unzip
 
 # Download code and prepare
 pip3 install pymongo
+pip3 install sqlalchemy
+pip3 install psycopg2
 
-su ubuntu
-mkdir ~/projects
-cd ~/projects
+mkdir /home/ubuntu/projects
+cd /home/ubuntu/projects
 wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/master.zip
 unzip jspider.zip
 mv JSpider-master/ JSpider
 rm jspider.zip
 
+# Assign owner to real executor
+find . |xargs chown ubuntu
+
 # execute and startup pyspider
+chmod 744 JSpider/HouseSpider/spider.sh
 cd JSpider/HouseSpider
-chmod 744 spider.sh
-sh spider.sh&
+sudo -u ubuntu sh spider.sh&
