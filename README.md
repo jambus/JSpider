@@ -4,18 +4,21 @@
 
 1) Prepare aws credential
 
+	Example:
+
 	aws configure --profile jambus2018
 	
 	=>input IAM key pair & region
 	
 	export AWS_PROFILE=jambus2018
 
+2) Update config-aws.cfg if required and build config properties
 
-2) Prepare RDB instance and run sql script to initial DB schema
+3) Prepare RDB instance and run sql script to initial DB schema
 
 	./build/build-rdb.sh
 
-3) Create aws EC2 instance with source package installed
+4) Create aws EC2 instance with source package installed
 
 Run below script to create the ec2 instance and it will print command to connect this instance via SSH:
 	
@@ -23,10 +26,9 @@ Run below script to create the ec2 instance and it will print command to connect
 
 It will create one ec2 intance and start script to install according required softwares.
 Then it will download source package from Github and install
+Then it will startup the pyspider and service on port 5000 and print the URL which can access via browser
 
 
-4) Run script
-
-	sh ~/projects/JSpider/HouseSpider/spider.sh
+5)
 
 TBD

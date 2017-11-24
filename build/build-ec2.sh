@@ -35,7 +35,7 @@ else
 	echo "Security group used: ${green}$instanceSecurityGroup${reset}"
 fi
 
-instanceResourceId=`aws ec2 run-instances --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids $instanceSecurityGroup \
+instanceResourceId=`aws ec2 run-instances --image-id $aws_ec2_ami --count 1 --instance-type t2.micro --key-name $aws_ec2_keyname --security-group-ids $instanceSecurityGroup \
 	--query 'Instances[0].InstanceId' \
 	--user-data file://install-software | sed 's/"//g'` 
 
@@ -44,10 +44,10 @@ instanceResourceId=`aws ec2 run-instances --image-id ami-15872773 --count 1 --in
 #--user-data file://install-software | sed 's/"//g'`
 
 echo "Instance Resource ID created: ${green}$instanceResourceId${reset}"
-aws ec2 create-tags --resources $instanceResourceId --tags Key=Name,Value=jambus_spider
+aws ec2 create-tags --resources $instanceResourceId --tags Key=Name,Value=$aws_ec2_tagname
 
 instancePublicDNS=`aws ec2 describe-instances --instance-ids $instanceResourceId --query 'Reservations[0].Instances[0].PublicDnsName' | sed 's/"//g'`
-#aws ec2 describe-instances --filters "Name=tag:Name,Values=jambus_spider" --query 'Reservations[0].Instances[0].PublicDnsName' | sed 's/"//g' | xargs -I {} echo "ssh -i ~/jambus2018-ec2.pem ubuntu@{}"
+#aws ec2 describe-instances --filters "Name=tag:Name,Values=$aws_ec2_tagname" --query 'Reservations[0].Instances[0].PublicDnsName' | sed 's/"//g' | xargs -I {} echo "ssh -i ~/jambus2018-ec2.pem ubuntu@{}"
 #aws ec2 describe-instances --instance-ids $instanceResourceId --query 'Reservations[0].Instances[0].PublicDnsName' | sed 's/"//g' | xargs -I {} echo "${green}ssh -i ~/jambus2018-ec2.pem ubuntu@{}${reset}"
 echo "EC2 instance start to create. PublicDnsName is: ${green}$instancePublicDNS${reset}"
 echo -e "\nUse below command to connect with SSH:"
