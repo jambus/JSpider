@@ -29,6 +29,9 @@ instanceResourceId=`aws ec2 run-instances --image-id $aws_ec2_ami --count 1 --in
 #--query 'Instances[0].InstanceId' \
 #--user-data file://install-software | sed 's/"//g'`
 
+echo "Grant RDB connect access for EC2 instance $instanceResourceId"
+aws ec2 authorize-security-group-ingress --group-name rds-spider-securitygroup --protocol tcp --port 5432 --source-group $instanceSecurityGroup
+
 echo "Instance Resource ID created: ${green}$instanceResourceId${reset}"
 aws ec2 create-tags --resources $instanceResourceId --tags Key=Name,Value=$aws_ec2_tagname
 
@@ -43,4 +46,6 @@ echo "${green}http://$instancePublicDNS:5000${reset}"
 
 #echo "Clean up temp files"
 #rm install-software64
+
+echo "Script complete!"
 
