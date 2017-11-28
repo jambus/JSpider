@@ -2,7 +2,7 @@ create database spider_taskdb;
 create database spider_projectdb;
 create database spider_resultdb;
 
-create user spider with PASSWORD 'test1234';
+create user {aws_rds_user} with PASSWORD '{aws_rds_user_password}';
 GRANT ALL PRIVILEGES ON DATABASE "spider_taskdb" to spider;
 GRANT ALL PRIVILEGES ON DATABASE "spider_projectdb" to spider;
 GRANT ALL PRIVILEGES ON DATABASE "spider_resultdb" to spider;

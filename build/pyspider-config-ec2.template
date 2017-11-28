@@ -1,0 +1,10 @@
+{
+  "taskdb": "sqlalchemy+postgresql+taskdb://{aws_rds_user}:{aws_rds_user_password}@{aws_rds_address}:5432/spider_taskdb",
+  "projectdb": "sqlalchemy+postgresql+projectdb://{aws_rds_user}:{aws_rds_user_password}@{aws_rds_address}:5432/spider_projectdb",
+  "resultdb": "sqlalchemy+postgresql+resultdb://{aws_rds_user}:{aws_rds_user_password}@{aws_rds_address}:5432/spider_resultdb",
+  "webui": {
+    "username": "{pyspider_webui_user}",
+    "password": "{pyspider_webui_password}",
+    "need-auth": {pyspider_webui_auth_enable}
+  }
+}

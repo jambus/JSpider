@@ -21,7 +21,12 @@ rm jspider.zip
 # Assign owner to real executor
 find . |xargs chown ubuntu
 
-# execute and startup pyspider
-chmod 744 JSpider/HouseSpider/spider.sh
-cd JSpider/HouseSpider
-sudo -u ubuntu sh spider.sh&
+# execute startup script
+echo "Software install complete, grant access & execute startup script."
+cd JSpider
+chmod 744 startup.sh
+sudo -u ubuntu sh startup.sh&
+
+#chmod 744 JSpider/HouseSpider/spider.sh
+#cd JSpider/HouseSpider
+#sudo -u ubuntu sh spider.sh&

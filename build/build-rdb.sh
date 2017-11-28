@@ -24,7 +24,7 @@ rdsInstanceAddress=`aws rds describe-db-instances --db-instance-identifier $aws_
 if [ $? -ne 0 ]; then
 	aws rds create-db-instance --db-instance-identifier $aws_rds_name --vpc-security-group-ids $rdsSecurityGroup \
 	--allocated-storage 20 --db-instance-class db.t2.micro --engine postgres \
-	--master-username $aws_rds_master --master-user-password $aws_rds_password
+	--master-username $aws_rds_master --master-user-password $aws_rds_master_password
 
 	echo "RDS start to create: ${green}$aws_rds_name${reset}"
 
@@ -39,8 +39,10 @@ rdsInstancePort=`aws rds describe-db-instances --db-instance-identifier $aws_rds
 echo -e "RDS address to connect: ${green}$rdsInstanceAddress:$rdsInstancePort${reset}"
 
 echo -e "\nRDS is ready. Start to initial DB schema & user..."
-PGPASSWORD=$aws_rds_password psql -h $rdsInstanceAddress -p $rdsInstancePort -U $aws_rds_master -d postgres -f db.sql	
+parseTemplateWithConfigProp db.sql.template > db.tmp.sql
 
+PGPASSWORD=$aws_rds_master_password psql -h $rdsInstanceAddress -p $rdsInstancePort -U $aws_rds_master -d postgres -f db.tmp.sql
+rm db.tmp.sql
 echo "Script complete!"
 
 
