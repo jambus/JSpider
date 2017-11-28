@@ -13,9 +13,10 @@ pip3 install psycopg2
 
 mkdir /home/ubuntu/projects
 cd /home/ubuntu/projects
-wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/master.zip
+#wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/master.zip
+wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/develop.zip
 unzip jspider.zip
-mv JSpider-master/ JSpider
+mv JSpider-develop/ JSpider
 rm jspider.zip
 
 # Assign owner to real executor
@@ -25,7 +26,7 @@ find . |xargs chown ubuntu
 echo "Software install complete, grant access & execute startup script."
 cd JSpider
 chmod 744 startup.sh
-sudo -u ubuntu sh startup.sh&
+sudo -u ubuntu sh build/startup.sh&
 
 #chmod 744 JSpider/HouseSpider/spider.sh
 #cd JSpider/HouseSpider

@@ -6,7 +6,7 @@
 # sudo pip install requests
 
 echo "Start to execute startup.sh ..."
-source build/base.cfg
+source base.cfg
 
 if [ -f /sys/hypervisor/uuid ] && [ `head -c 3 /sys/hypervisor/uuid` == ec2 ]; then
     echo -e "Start EC2 mode..."
