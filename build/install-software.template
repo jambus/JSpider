@@ -22,11 +22,19 @@ rm jspider.zip
 # Assign owner to real executor
 find . |xargs chown ubuntu
 
+# Parse pyspider config json template
+echo -e "\nSoftware install complete. Start to parse templates..."
+cd JSpider/build
+source base.cfg
+echo -e "Add RDS address into config properties: ${green}{aws_rds_address}${reset}"
+properties+=("aws_rds_address={aws_rds_address}")
+parseTemplateWithConfigProp pyspider-config-ec2.template > pyspider-config-ec2.json
+
 # execute startup script
-echo "Software install complete, grant access & execute startup script."
-cd JSpider
+echo "Grant access & execute startup script."
+cd ..
 chmod 744 startup.sh
-sudo -u ubuntu sh build/startup.sh&
+sudo -u ubuntu sh startup.sh&
 
 #chmod 744 JSpider/HouseSpider/spider.sh
 #cd JSpider/HouseSpider

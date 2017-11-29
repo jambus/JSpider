@@ -21,9 +21,18 @@ else
 	echo "Security group used: ${green}$instanceSecurityGroup${reset}"
 fi
 
+echo -e "\nParsing install script..."
+rdsInstanceAddress=`aws rds describe-db-instances --db-instance-identifier $aws_rds_name --query 'DBInstances[0].Endpoint.Address' | sed 's/"//g'`
+echo "Find available RDS instance: ${green}$rdsInstanceAddress${reset}"
+properties+=("aws_rds_address=$rdsInstanceAddress")
+
+parseTemplateWithConfigProp install-software.template > install-software
+
 instanceResourceId=`aws ec2 run-instances --image-id $aws_ec2_ami --count 1 --instance-type t2.micro --key-name $aws_ec2_keyname --security-group-ids $instanceSecurityGroup \
 	--query 'Instances[0].InstanceId' \
 	--user-data file://install-software | sed 's/"//g'` 
+
+rm install-software
 
 #instanceResourceId=`aws ec2 run-instances --profile $1 --image-id ami-15872773 --count 1 --instance-type t2.micro --key-name jambus2018-ec2 --security-group-ids sg-c02bdab9 \
 #--query 'Instances[0].InstanceId' \
