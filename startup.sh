@@ -10,7 +10,7 @@ echo "Start to execute startup.sh ..."
 if [ -f /sys/hypervisor/uuid ] && [ `head -c 3 /sys/hypervisor/uuid`=="ec2" ]; then
     echo -e "Start EC2 mode..."
 
-    pyspider -c build/pyspider-config-ec2.json > pyspider.log
+    pyspider -c build/pyspider-config-ec2.json
 else
     echo -e "Start local mode..."
     pyspider -c build/pyspider-config-local.json
