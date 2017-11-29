@@ -9,8 +9,6 @@
 	aws configure --profile jambus2018
 	
 	=>input IAM key pair & region
-	
-	export AWS_PROFILE=jambus2018
 
 2) Update config-aws.cfg if required and build config properties
 
@@ -26,9 +24,9 @@ Run below script to create the ec2 instance and it will print command to connect
 
 It will create one ec2 intance and start script to install according required softwares.
 Then it will download source package from Github and install
-Then it will startup the pyspider and service on port 5000 and print the URL which can access via browser
+Then it will startup the pyspider and service on port 5000 and print the URL which can access console via browser
 
 
-5)
+5) Load spider python scripts and execute on pyspider console
 
 TBD
