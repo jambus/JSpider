@@ -1,30 +1,30 @@
 #!/usr/bin/env python
-# Project: lianjia
+# Project: lianjia_target
+# Desc: Specific requirement and dig results
 
 import urllib.parse as urlparse
 
 from pyspider.libs.base_handler import *
 
 
-class LianJiaHandler(BaseHandler):
+class LianJiaTargetHandler(BaseHandler):
     crawl_config = {
     }
 
     def __init__(self):
-        self.rootUrl = 'http://sh.lianjia.com/ershoufang'
-        self.count = 0
+        self.rootUrl = 'http://sh.lianjia.com/ershoufang/b180to300l1l2m45to90o1s20'
 
     @every(minutes=24 * 60)
     def on_start(self):
         self.crawl(self.rootUrl,
                    callback=self.index_page)
 
-    @config(age=10 * 24 * 60 * 60)
+    @config(age=7 * 24 * 60 * 60)
     def index_page(self, response):
         # Get area links
-        for each in response.doc('a.level1-item,div.level1-item>a,div.level2-item>a').items():
-            newFullUrl = urlparse.urljoin(self.rootUrl, each.attr.href)
-            self.crawl(newFullUrl, callback=self.index_page)
+        # for each in response.doc('a.level1-item,div.level1-item>a,div.level2-item>a').items():
+        #    newFullUrl = urlparse.urljoin(self.rootUrl, each.attr.href)
+        #    self.crawl(newFullUrl, callback=self.index_page)
 
         # Get house content list
         for each in response.doc('a.js_fanglist_title').items():
@@ -37,7 +37,7 @@ class LianJiaHandler(BaseHandler):
             newFullUrl = urlparse.urljoin(self.rootUrl, nextButton.attr.href)
             self.crawl(newFullUrl, callback=self.index_page)
 
-    @config(priority=2)
+    @config(priority=2, age=7 * 24 * 60 * 60)
     def detail_page(self, response):
         return {
             "url": response.url,
