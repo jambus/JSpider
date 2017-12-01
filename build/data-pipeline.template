@@ -1,0 +1,83 @@
+{
+  "objects": [
+    {
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "filePath": "s3://pyspider/data/",
+      "name": "spider_s3",
+      "id": "DataNodeId_470dk",
+      "type": "S3DataNode"
+    },
+    {
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "database": {
+        "ref": "DatabaseId_Ilkkl"
+      },
+      "name": "spider-rdb",
+      "id": "DataNodeId_N5rev",
+      "type": "SqlDataNode",
+      "table": "lianjia_target"
+    },
+    {
+      "period": "1 days",
+      "name": "Every 1 day",
+      "id": "DefaultSchedule",
+      "type": "Schedule",
+      "startAt": "FIRST_ACTIVATION_DATE_TIME"
+    },
+    {
+      "output": {
+        "ref": "DataNodeId_470dk"
+      },
+      "input": {
+        "ref": "DataNodeId_N5rev"
+      },
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "name": "DefaultCopyActivity2",
+      "runsOn": {
+        "ref": "ResourceId_og9w8"
+      },
+      "id": "CopyActivityId_5AXU3",
+      "type": "CopyActivity"
+    },
+    {
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "resourceRole": "DataPipelineDefaultResourceRole",
+      "role": "DataPipelineDefaultRole",
+      "instanceType": "m1.small",
+      "name": "EC2",
+      "id": "ResourceId_og9w8",
+      "type": "Ec2Resource",
+      "terminateAfter": "10 Minutes"
+    },
+    {
+      "failureAndRerunMode": "CASCADE",
+      "schedule": {
+        "ref": "DefaultSchedule"
+      },
+      "resourceRole": "DataPipelineDefaultResourceRole",
+      "role": "DataPipelineDefaultRole",
+      "pipelineLogUri": "s3://pyspider/log/",
+      "scheduleType": "CRON",
+      "name": "Default",
+      "id": "Default"
+    },
+    {
+      "connectionString": "jdbc:postgresql://spider-rdb.cwjm8lssrlxz.ap-northeast-1.rds.amazonaws.com:5432/spider_resultdb",
+      "*password": "rm9GXThp",
+      "name": "spider_result",
+      "id": "DatabaseId_Ilkkl",
+      "type": "JdbcDatabase",
+      "jdbcDriverClass": "org.postgresql.Driver",
+      "username": "spider"
+    }
+  ],
+  "parameters": []
+}
