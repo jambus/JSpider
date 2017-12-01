@@ -1,8 +1,14 @@
+-- Prepare spider related databases & user
 create database spider_taskdb;
 create database spider_projectdb;
 create database spider_resultdb;
 
 create user {aws_rds_user} with PASSWORD '{aws_rds_user_password}';
-GRANT ALL PRIVILEGES ON DATABASE "spider_taskdb" to spider;
-GRANT ALL PRIVILEGES ON DATABASE "spider_projectdb" to spider;
-GRANT ALL PRIVILEGES ON DATABASE "spider_resultdb" to spider;
+GRANT ALL PRIVILEGES ON DATABASE "spider_taskdb" to {aws_rds_user};
+GRANT ALL PRIVILEGES ON DATABASE "spider_projectdb" to {aws_rds_user};
+GRANT ALL PRIVILEGES ON DATABASE "spider_resultdb" to {aws_rds_user};
+
+-- Prepare airflow related database & user
+create database airflow;
+create user {aws_rds_user_airflow} with PASSWORD '{aws_rds_user_airflow_password}';
+GRANT ALL PRIVILEGES ON DATABASE "airflow" to {aws_rds_user_airflow};

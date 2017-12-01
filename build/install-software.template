@@ -11,13 +11,14 @@ pip3 install pymongo
 pip3 install sqlalchemy
 pip3 install psycopg2
 
-mkdir /home/ubuntu/projects
-cd /home/ubuntu/projects
+mkdir {code_project_home}
+mkdir {code_project_log}
+cd {code_project_home}
 #Select master or develop branch to extract the source code
 wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/{code_branch}.zip
-unzip jspider.zip
-mv JSpider-{code_branch}/ JSpider
-rm jspider.zip
+unzip jspider.zip -d JSpider
+#mv JSpider-{code_branch}/ JSpider
+rm *.zip
 
 # Assign owner to real executor
 find . |xargs chown ubuntu
@@ -39,3 +40,12 @@ sudo -u ubuntu sh startup.sh&
 #chmod 744 JSpider/HouseSpider/spider.sh
 #cd JSpider/HouseSpider
 #sudo -u ubuntu sh spider.sh&
+
+# Setup airflow
+export AIRFLOW_HOME={airflow_home}
+pip3 install "airflow[s3, postgres]"
+airflow initdb
+cd {airflow_home}
+airflowConnectUrl="postgresql+psycopg2://{aws_rds_user}:{aws_rds_user_password}@{aws_rds_address}:5432/airflow"
+cat airflow.cfg | sed -r 's/(sql_alchemy_conn *= *).*/\1$airflowConnectUrl/g'
+airflow webserver -p {airflow_webui_port}
