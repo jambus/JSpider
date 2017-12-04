@@ -16,7 +16,7 @@ mkdir {code_project_log}
 cd {code_project_home}
 #Select master or develop branch to extract the source code
 wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/{code_branch}.zip
-unzip *.zip -d JSpider
+unzip jspider.zip -d JSpider
 #mv JSpider-{code_branch}/ JSpider
 rm *.zip
 
