@@ -15,6 +15,9 @@ if [ $? -ne 0 ]; then
 	aws ec2 authorize-security-group-ingress --group-name ec2-spider-securitygroup --protocol tcp --port 80 --cidr 0.0.0.0/0
 	aws ec2 authorize-security-group-ingress --group-name ec2-spider-securitygroup --protocol tcp --port 5432 --cidr 0.0.0.0/0
 
+	#grant EC2 access for airflow port
+	aws ec2 authorize-security-group-ingress --group-name ec2-spider-securitygroup --protocol tcp --port $airflow_webui_port --cidr 0.0.0.0/0
+
 	echo "Security group created: ${green}$instanceSecurityGroup${reset}"
 else
 	instanceSecurityGroup=`echo $instanceSecurityGroup | sed 's/"//g'`
