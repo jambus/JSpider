@@ -47,5 +47,5 @@ pip3 install "airflow[s3, postgres]"
 airflow initdb
 cd {airflow_home}
 airflowConnectUrl="postgresql+psycopg2://{aws_rds_user}:{aws_rds_user_password}@{aws_rds_address}:5432/airflow"
-cat airflow.cfg | sed -r 's/(sql_alchemy_conn *= *).*/\1$airflowConnectUrl/g'
+cat airflow.cfg | sed -r "s/(sql_alchemy_conn *= *).*/\1$airflowConnectUrl/g" > airflow.cfg
 airflow webserver -p {airflow_webui_port}
