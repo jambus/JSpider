@@ -9,7 +9,14 @@ user.username = '{airflow_webui_username}'
 user.email = '{airflow_webui_email}'
 user.password = '{airflow_webui_password}'
 session = settings.Session()
-session.add(user)
-session.commit()
-session.close()
+
+userCount = session.query(models.User).filter(
+    models.User.username == 'jambus').count()
+
+if userCount == 0:
+    session.add(user)
+    session.commit()
+    session.close()
+else:
+    print("User already exist, not require to create.")
 exit()
