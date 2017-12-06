@@ -53,8 +53,10 @@ instancePublicDNS=`aws ec2 describe-instances --instance-ids $instanceResourceId
 echo "EC2 instance start to create. PublicDnsName is: ${green}$instancePublicDNS${reset}"
 echo -e "\nUse below command to connect with SSH:"
 echo "${green}ssh -i ~/jambus2018-ec2.pem ubuntu@$instancePublicDNS${reset}"
-echo -e "\nUse below URL open in browser when EC2 instance ready in minutes:"
+echo -e "\nUse below URL to open Pyspider console when EC2 instance ready in minutes:"
 echo "${green}http://$instancePublicDNS:5000${reset}"
+echo -e "\nUse below URL open to open Airflow console when EC2 instance ready in minutes:"
+echo "${green}http://$instancePublicDNS:$airflow_webui_port${reset}"
 
 #echo "Clean up temp files"
 #rm install-software64

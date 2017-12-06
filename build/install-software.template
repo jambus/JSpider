@@ -58,5 +58,5 @@ airflowConfig=`echo "$airflowConfig" | sed -r "s%(web_server_port *= *).*%\1{air
 sudo -u ubuntu echo "$airflowConfig" > airflow.cfg
 
 sudo -u ubuntu airflow initdb
-sudo -u ubuntu airflow webserver &
+sudo -u ubuntu airflow webserver -p {airflow_webui_port} &
 sudo -u ubuntu airflow scheduler &
