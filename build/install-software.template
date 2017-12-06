@@ -1,5 +1,7 @@
 #!/bin/bash
 # install softwares
+
+echo "Start to install softwares..."
 apt update
 apt install -y python3-pip
 pip3 install --upgrade pip
@@ -10,14 +12,17 @@ apt install -y unzip
 pip3 install pymongo
 pip3 install sqlalchemy
 pip3 install psycopg2
+pip3 install flask_bcrypt
 
-mkdir /home/ubuntu/projects
-cd /home/ubuntu/projects
+mkdir {code_project_home}
+cd {code_project_home}
 #Select master or develop branch to extract the source code
 wget -O jspider.zip --no-check-certificate https://github.com/jambus/JSpider/archive/{code_branch}.zip
 unzip jspider.zip
-mv JSpider-{code_branch}/ JSpider
 rm jspider.zip
+mv * JSpider/
+
+mkdir {code_project_log}
 
 # Assign owner to real executor
 find . |xargs chown ubuntu
@@ -39,3 +44,26 @@ sudo -u ubuntu sh startup.sh&
 #chmod 744 JSpider/HouseSpider/spider.sh
 #cd JSpider/HouseSpider
 #sudo -u ubuntu sh spider.sh&
+
+# Setup airflow
+echo "Start to install airflow..."
+export AIRFLOW_HOME={airflow_home}
+pip3 install "airflow[s3, postgres]"
+sudo -u ubuntu airflow initdb & 
+wait $!
+echo "Init airflow db complete. Start to startup"
+cd {airflow_home}
+parseTemplateWithConfigProp {code_project_home}/JSpider/build/airflow.cfg.template > airflow.cfg
+#airflowConnectUrl="postgresql+psycopg2://{aws_rds_user}:{aws_rds_user_password}@{aws_rds_address}:5432/airflow"
+#airflowConfig=`cat airflow.cfg | sed -r "s%(sql_alchemy_conn *= *).*%\1$airflowConnectUrl%g"`
+#airflowConfig=`echo "$airflowConfig" | sed -r "s%(web_server_port *= *).*%\1{airflow_webui_port}%g"`
+#sudo -u ubuntu echo "$airflowConfig" > airflow.cfg
+
+sudo -u ubuntu airflow initdb
+sudo -u ubuntu airflow webserver -p {airflow_webui_port} &
+sudo -u ubuntu airflow scheduler &
+echo "Create airflow user..."
+parseTemplateWithConfigProp {code_project_home}/JSpider/build/airflowCreateUser.py.template > airflowCreateUser.py
+python3 airflowCreateUser.py
+
+echo "Script complete."
