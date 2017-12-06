@@ -12,6 +12,7 @@ apt install -y unzip
 pip3 install pymongo
 pip3 install sqlalchemy
 pip3 install psycopg2
+pip3 install flask_bcrypt
 
 mkdir {code_project_home}
 cd {code_project_home}
